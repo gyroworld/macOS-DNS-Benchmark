@@ -11,12 +11,18 @@ DOMAIN_COUNT=$(echo $DOMAINS | wc -l | awk '{print $1}')
 
 function get_dns_servers() {
     #Check if default gateway in part of system DNS servers
-    for server in "${SYSTEM_DNS_SERVERS[@]}"; do
-        if [[ "${server}" == ${DEFAULT_GATEWAY} ]]; then
+    for i in "${!SYSTEM_DNS_SERVERS[@]}"; do
+        if [[ "${i}" == "${DEFAULT_GATEWAY}" ]]; then
             DEFAULT_GATEWAY_IN_SYSTEM_DNS=true
             DEFAULT_GATEWAY_IS_DNS=true
-            break
+            #break
         fi
+
+        #Remove IPv6 addresses
+        if [[ "${i}" == *":"* ]]; then
+            unset "${!SYSTEM_DNS_SERVERS[$i]}"
+        fi
+
     done
 
     #If it's not, check if it has a DNS server running
