@@ -1,5 +1,7 @@
 #macOS DNS Benchmark
 IFS=$' '
+ARGS_COUNT="$#"
+ARGS_ARR=("$@")
 BENCHMARK_DNS_IPS=("1.1.1.1" "8.8.8.8")
 BENCHMARK_DNS_TEXT=("Cloudflare DNS" "Google DNS")
 SYSTEM_DNS_SERVERS=($(grep nameserver <(scutil --dns) | awk '{print $3}' | sort -u))
@@ -55,6 +57,14 @@ function run_benchmark() {
     if [ $DEFAULT_GATEWAY_IN_SYSTEM_DNS = false ] && [ $DEFAULT_GATEWAY_IS_DNS = true ]; then
         query_dns_server $DEFAULT_GATEWAY "Router DNS [not in use]"
     fi
+
+    if (($ARGS_COUNT > 0)); then
+        for item in "${ARGS_ARR[@]}"; do
+            query_dns_server "${item}" "User added DNS"
+        done
+
+    fi
+
 }
 
 function main() {
