@@ -29,7 +29,7 @@ function get_dns_servers() {
     if [ $DEFAULT_GATEWAY_IN_SYSTEM_DNS = false ]; then
         check=$(nslookup -retry=1 -timeout=1 example.com $DEFAULT_GATEWAY)
         if [[ "${check}" == *"connection timed out"* ]]; then
-            echo "Default gateway not a DNS server."
+            printf "INFO: Default gateway is not a DNS server.\n"
         else
             DEFAULT_GATEWAY_IS_DNS=true
         fi
