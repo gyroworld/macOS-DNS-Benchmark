@@ -2,7 +2,7 @@
 IFS=$' '
 BENCHMARK_DNS_IPS=("1.1.1.1" "8.8.8.8")
 BENCHMARK_DNS_TEXT=("Cloudflare DNS" "Google DNS")
-SYSTEM_DNS_SERVERS=($(grep nameserver <(scutil --dns) | awk '{print $3}' | uniq))
+SYSTEM_DNS_SERVERS=($(grep nameserver <(scutil --dns) | awk '{print $3}' | sort -u))
 DEFAULT_GATEWAY=$(route get default | grep gateway | awk '{print $2}')
 DEFAULT_GATEWAY_IN_SYSTEM_DNS=false
 DEFAULT_GATEWAY_IS_DNS=false
@@ -20,7 +20,7 @@ function get_dns_servers() {
 
         #Remove IPv6 addresses
         if [[ "${SYSTEM_DNS_SERVERS[$i]}" == *":"* ]]; then
-            unset '${SYSTEM_DNS_SERVERS[$i]}'
+            unset 'SYSTEM_DNS_SERVERS[i]'
         fi
 
     done
