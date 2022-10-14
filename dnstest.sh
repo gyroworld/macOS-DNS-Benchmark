@@ -47,7 +47,7 @@ function run_benchmark() {
     done
 
     if [ $DEFAULT_GATEWAY_IN_SYSTEM_DNS = false ] && [ $DEFAULT_GATEWAY_IS_DNS = true ]; then
-        query_dns_server $DEFAULT_GATEWAY "Router DNS [not is use]"
+        query_dns_server $DEFAULT_GATEWAY "Router DNS [not in use]"
     fi
 }
 
