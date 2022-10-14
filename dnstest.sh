@@ -12,7 +12,7 @@ DOMAIN_COUNT=$(echo $DOMAINS | wc -l | awk '{print $1}')
 function get_dns_servers() {
     #Check if default gateway in part of system DNS servers
     for i in "${!SYSTEM_DNS_SERVERS[@]}"; do
-        if [[ "${i}" == "${DEFAULT_GATEWAY}" ]]; then
+        if [[ "${SYSTEM_DNS_SERVERS[$i]}" == "${DEFAULT_GATEWAY}" ]]; then
             DEFAULT_GATEWAY_IN_SYSTEM_DNS=true
             DEFAULT_GATEWAY_IS_DNS=true
             #break
