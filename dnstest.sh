@@ -20,7 +20,7 @@ function get_dns_servers() {
 
         #Remove IPv6 addresses
         if [[ "${SYSTEM_DNS_SERVERS[$i]}" == *":"* ]]; then
-            unset "${SYSTEM_DNS_SERVERS[$i]}"
+            unset '${SYSTEM_DNS_SERVERS[$i]}'
         fi
 
     done
