@@ -1,5 +1,5 @@
 #macOS DNS Benchmark
-IFS=$' '
+IFS=$' \n'
 ARGS_COUNT="$#"
 ARGS_ARR=("$@")
 BENCHMARK_DNS_IPS=("1.1.1.1" "8.8.8.8")
