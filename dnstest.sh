@@ -1,5 +1,4 @@
 #macOS DNS Benchmark
-IFS=$' '
 ARGS_COUNT="$#"
 ARGS_ARR=("$@")
 BENCHMARK_DNS_IPS=("1.1.1.1" "8.8.8.8")
@@ -17,7 +16,6 @@ function get_dns_servers() {
         if [[ "${SYSTEM_DNS_SERVERS[$i]}" == "${DEFAULT_GATEWAY}" ]]; then
             DEFAULT_GATEWAY_IN_SYSTEM_DNS=true
             DEFAULT_GATEWAY_IS_DNS=true
-            #break
         fi
 
         #Remove IPv6 addresses
