@@ -36,10 +36,9 @@ function get_dns_servers() {
 }
 
 function query_dns_server() {
-    dscacheutil -flushcache
     printf "\n"
     printf "\e[1;32mDNS Server: $1 ($2)\e[0m"
-    time for i in ${DOMAINS[@]}; do dig @$1 $i +noall +answer > /dev/null; done
+    time for i in ${DOMAINS[@]}; do dig @$1 $i > /dev/null; done
 }
 
 function run_benchmark() {
