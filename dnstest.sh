@@ -7,8 +7,7 @@ SYSTEM_DNS_SERVERS=($(grep nameserver <(scutil --dns) | awk '{print $3}' | sort 
 DEFAULT_GATEWAY=$(route get default | grep gateway | awk '{print $2}')
 DEFAULT_GATEWAY_IN_SYSTEM_DNS=false
 DEFAULT_GATEWAY_IS_DNS=false
-DOMAINS=$(curl -s https://raw.githubusercontent.com/gyroworld/macOS-DNS-Benchmark/main/domains.list)
-DOMAIN_COUNT=$(echo $DOMAINS | wc -l | awk '{print $1}')
+DOMAINS=($(curl -s https://raw.githubusercontent.com/gyroworld/macOS-DNS-Benchmark/main/domains.list))
 
 function get_dns_servers() {
     #Check if default gateway in part of system DNS servers
@@ -40,7 +39,7 @@ function query_dns_server() {
     dscacheutil -flushcache
     printf "\n"
     printf "\e[1;32mDNS Server: $1 ($2)\e[0m"
-    time dig +tries=1 +time=2 @$1 -f <(echo $DOMAINS) +noall +answer >/dev/null
+    time for i in ${DOMAINS[@]}; do dig @$1 $i +noall +answer > /dev/null; done
 }
 
 function run_benchmark() {
@@ -69,7 +68,7 @@ function main() {
     clear
     printf "\e[1;34mmacOS DNS Benchmark\e[0m\n"
     printf "\n"
-    printf "\e[1;37mQuerying $DOMAIN_COUNT domains...\e[0m\n"
+    printf "\e[1;37mQuerying ${#DOMAINS[@]} domains...\e[0m\n"
     get_dns_servers
     run_benchmark
 }
